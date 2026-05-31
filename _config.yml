@@ -1,0 +1,8 @@
+title: Shubham Singh
+description: GSoC 2026 with PySAL · open source · spatial analysis
+url: "https://firepheonix.github.io"
+baseurl: "/NUMFocus-PySal-gsoc-26-blogs"
+theme: minima
+markdown: kramdown
+plugins:
+  - jekyll-feed
