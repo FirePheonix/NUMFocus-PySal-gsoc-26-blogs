@@ -6,19 +6,19 @@ Repository: [FirePheonix/NUMFocus-PySal-gsoc-26-blogs](https://github.com/FirePh
 
 ## Structure
 
+```text
+index.md
+week-1.md
+week-2.md
+_config.yml
 ```
-blog/
-  index.md              # Blog listing
-  gsoc-2026-kickoff.md  # First post
-```
 
-## Live URLs (GitHub Pages)
+## Current Posts
 
-Enable **Settings → Pages → Deploy from branch `main` / root**, then use:
+- `week-1.md` - Mentorship kickoff and first merged contribution
+- `week-2.md` - First GWPCA implementation and notebook demo
 
-- Blog index: https://firepheonix.github.io/NUMFocus-PySal-gsoc-26-blogs/blog/
-- Kickoff post: https://firepheonix.github.io/NUMFocus-PySal-gsoc-26-blogs/blog/gsoc-2026-kickoff/
+## Notes
 
-## New posts
-
-Add a file under `blog/` (e.g. `blog/gsoc-2026-week-2.md`) with the same front-matter style as the kickoff post, then link it from `blog/index.md`.
+- The week 2 post includes a Markdown summary of `gwpca_demo.ipynb` so the notebook work is visible directly in the blog.
+- Notebook figures extracted from `gwpca_demo.ipynb` are stored under `assets/week-2/` and embedded in the week 2 post.

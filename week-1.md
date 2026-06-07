@@ -1,12 +1,12 @@
 ---
 layout: post
-title: "Week 1 — Mentorship kickoff and first merged contribution"
+title: "Week 1 - Mentorship kickoff and first merged contribution"
 date: 2026-05-31
 tags: [gsoc, pysal, gwlearn, gwpca, opensource, python, spatial]
 permalink: /week-1/
 ---
 
-Hi — I'm **Shubham Singh** ([@FirePheonix](https://github.com/FirePheonix)), contributing to **PySAL** through **Google Summer of Code 2026** under the NumFOCUS umbrella.
+Hi - I'm **Shubham Singh** ([@FirePheonix](https://github.com/FirePheonix)), contributing to **PySAL** through **Google Summer of Code 2026** under the NumFOCUS umbrella.
 
 **Project:** Implementation of geographically weighted matrix decomposition algorithms (starting with **GWPCA**) in the **`gwlearn`** sub-package.
 
@@ -22,4 +22,4 @@ Alongside the introductory discussions, I began contributing to the codebase by 
 - PySAL GSoC wiki: [Google Summer of Code 2026](https://github.com/pysal/pysal/wiki/Google-Summer-of-Code-2026)
 - `gwlearn` docs: [pysal.org/gwlearn](https://pysal.org/gwlearn/)
 
-[← Back to index]({{ "/" | relative_url }})
+[<- Back to index]({{ "/" | relative_url }})
