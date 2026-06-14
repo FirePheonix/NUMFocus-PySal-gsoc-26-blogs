@@ -10,6 +10,7 @@ Repository: [FirePheonix/NUMFocus-PySal-gsoc-26-blogs](https://github.com/FirePh
 index.md
 week-1.md
 week-2.md
+week-3.md
 _config.yml
 ```
 
@@ -17,6 +18,7 @@ _config.yml
 
 - `week-1.md` - Mentorship kickoff and first merged contribution
 - `week-2.md` - First GWPCA implementation and notebook demo
+- `week-3.md` - Covariance alignment and R comparison work
 
 ## Notes
 
