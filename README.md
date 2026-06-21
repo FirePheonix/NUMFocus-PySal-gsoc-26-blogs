@@ -11,6 +11,7 @@ index.md
 week-1.md
 week-2.md
 week-3.md
+week-4.md
 _config.yml
 ```
 
@@ -19,6 +20,7 @@ _config.yml
 - `week-1.md` - Mentorship kickoff and first merged contribution
 - `week-2.md` - First GWPCA implementation and notebook demo
 - `week-3.md` - Covariance alignment and R comparison work
+- `week-4.md` - Decomposition refactor and validation hardening
 
 ## Notes
 
