@@ -17,5 +17,6 @@ Weekly updates from the coding period:
 - [**Week 3**]({{ "/week-3/" | relative_url }}) - Covariance alignment, R comparison work, and CV cleanup *(14 Jun 2026)*
 - [**Week 4**]({{ "/week-4/" | relative_url }}) - Decomposition refactor, typing cleanup, and bandwidth validation tests *(21 Jun 2026)*
 - [**Week 5**]({{ "/week-5/" | relative_url }}) - Labeled outputs, API cleanup, and spatialml -> spml conflict resolution *(30 Jun 2026)*
+- [**Week 6**]({{ "/week-6/" | relative_url }}) - GWPCA R Parity and Numerical Stability *(01 Jul 2026)*
 
 _More weeks added every two weeks during the program._
