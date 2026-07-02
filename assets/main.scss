@@ -3,16 +3,23 @@
 
 @import "minima";
 
+.wrapper {
+  max-width: 1480px;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
 .site-shell {
   display: grid;
-  grid-template-columns: 280px minmax(0, 1fr);
-  gap: 2.5rem;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 1.75rem;
   align-items: start;
 }
 
 .site-sidebar {
   position: sticky;
   top: 2rem;
+  margin-left: -0.5rem;
 }
 
 .site-sidebar__inner {

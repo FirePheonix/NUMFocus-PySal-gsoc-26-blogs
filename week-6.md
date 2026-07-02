@@ -29,6 +29,69 @@ The biggest difference from earlier weeks was that the work stopped being mainly
 
 This is a very different mindset from "feature development," and I felt that shift strongly while working through the PR.
 
+## Concrete Results from the R Comparison
+
+One thing I do not want to lose in a more reflective writeup is the actual observed numbers. So before getting into the interpretation, here are the concrete reference-style comparisons that guided my confidence.
+
+### Fixed-bandwidth reference case
+
+For the fixed synthetic reference setup, the local explained-variance ratios matched the R fixture exactly at the precision we were testing.
+
+#### Explained Variance Ratio (Local PV, %)
+
+| Location | GWmodel PC1 | spml PC1 | GWmodel PC2 | spml PC2 |
+|---|---|---|---|---|
+| 2 | 66.79944007 | 66.79944007 | 28.21802351 | 28.21802351 |
+| 3 | 63.64566799 | 63.64566799 | 31.44977619 | 31.44977619 |
+| 4 | 61.39397786 | 61.39397786 | 33.10290676 | 33.10290676 |
+| 5 | 62.47439538 | 62.47439538 | 32.70199980 | 32.70199980 |
+| 6 | 57.79939210 | 57.79939210 | 32.34985527 | 32.34985527 |
+| 7 | 68.57077309 | 68.57077309 | 23.21854269 | 23.21854269 |
+
+That already told me something important: the Python implementation was preserving the same local balance of variance across components in the places where the local decomposition was informative.
+
+For the loadings, I compared absolute values because PCA signs are arbitrary. Again, the local structure lined up exactly in the tested reference case.
+
+#### Component Loadings (Absolute Values)
+
+| Location | Feature | GWmodel PC1 | spml PC1 | GWmodel PC2 | spml PC2 |
+|---|---|---|---|---|---|
+| 2 | A | 0.68895623 | 0.68895623 | 0.08114459 | 0.08114459 |
+| 2 | B | 0.70852055 | 0.70852055 | 0.13404747 | 0.13404747 |
+| 2 | C | 0.15276758 | 0.15276758 | 0.98764712 | 0.98764712 |
+| 3 | A | 0.79204176 | 0.79204176 | 0.05003965 | 0.05003965 |
+| 3 | B | 0.60487671 | 0.60487671 | 0.19889535 | 0.19889535 |
+| 3 | C | 0.08242585 | 0.08242585 | 0.97874239 | 0.97874239 |
+| 4 | A | 0.88485219 | 0.88485219 | 0.02065589 | 0.02065589 |
+| 4 | B | 0.45039504 | 0.45039504 | 0.29329253 | 0.29329253 |
+| 4 | C | 0.11908364 | 0.11908364 | 0.95579957 | 0.95579957 |
+| 5 | A | 0.96219121 | 0.96219121 | 0.10256587 | 0.10256587 |
+| 5 | B | 0.21097300 | 0.21097300 | 0.30528858 | 0.30528858 |
+| 5 | C | 0.17227437 | 0.17227437 | 0.94672019 | 0.94672019 |
+| 6 | A | 0.93663008 | 0.93663008 | 0.31174872 | 0.31174872 |
+| 6 | B | 0.08511507 | 0.08511507 | 0.64500411 | 0.64500411 |
+| 6 | C | 0.33982279 | 0.33982279 | 0.69769795 | 0.69769795 |
+| 7 | A | 0.51692673 | 0.51692673 | 0.83387714 | 0.83387714 |
+| 7 | B | 0.62819202 | 0.62819202 | 0.21598468 | 0.21598468 |
+| 7 | C | 0.58151659 | 0.58151659 | 0.50793655 | 0.50793655 |
+
+### Adaptive-bandwidth reference case
+
+I also did not want the comparison to be accidentally overfit to one neighborhood definition. So I checked an adaptive nearest-neighbor reference case as well.
+
+For the adaptive fixture, the local explained-variance ratios again lined up cleanly:
+
+| Location | GWmodel PC1 | spml PC1 | GWmodel PC2 | spml PC2 |
+|---|---|---|---|---|
+| 0 | 67.31107772 | 67.31107772 | 24.42745284 | 24.42745284 |
+| 1 | 66.37226587 | 66.37226587 | 25.31665071 | 25.31665071 |
+| 2 | 64.99594573 | 64.99594573 | 26.88100518 | 26.88100518 |
+| 3 | 63.29265622 | 63.29265622 | 30.29365663 | 30.29365663 |
+| 4 | 61.89382622 | 61.89382622 | 31.88004401 | 31.88004401 |
+| 5 | 59.07276182 | 59.07276182 | 33.25337976 | 33.25337976 |
+
+That mattered because fixed and adaptive kernels stress different parts of the implementation. Matching in both cases gave me much more confidence that I was not only lucky in one narrow setup.
+
 ## R Comparison: What We Actually Observed
 
 The most important thing I want to record from this week is that the R comparison was **not** just a vague "looks close" exercise. It became much more concrete.
