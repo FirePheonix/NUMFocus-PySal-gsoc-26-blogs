@@ -1,0 +1,64 @@
+---
+---
+
+@import "minima";
+
+.site-shell {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.site-sidebar {
+  position: sticky;
+  top: 2rem;
+}
+
+.site-sidebar__inner {
+  padding: 1.25rem 1.25rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #fafafa;
+}
+
+.site-sidebar__title {
+  margin: 0 0 0.9rem;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.site-sidebar__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-sidebar__item + .site-sidebar__item {
+  margin-top: 0.55rem;
+}
+
+.site-sidebar__link {
+  display: block;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.site-sidebar__link.is-active {
+  font-weight: 600;
+}
+
+.site-main {
+  min-width: 0;
+}
+
+@media screen and (max-width: 900px) {
+  .site-shell {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .site-sidebar {
+    position: static;
+  }
+}
