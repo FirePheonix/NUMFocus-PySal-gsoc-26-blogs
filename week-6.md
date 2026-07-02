@@ -214,6 +214,129 @@ I liked that outcome because it kept the spirit of the R comparison without maki
 
 There was also a very practical reason for this change: if the only evidence of R comparison lives in local scripts and external files, then the PR reviewer has to trust that evidence indirectly. Once the relevant reference values are encoded into the Python tests themselves, the evidence becomes part of the branch instead of background context.
 
+## How the Tests Were Actually Set Up
+
+This was one of the most important parts of the week, and I do not think the earlier version of this post captured it clearly enough.
+
+I did **not** want the R comparison to end up as:
+
+- one local R script
+- two JSON files on my machine
+- and a vague sentence in the PR saying "I checked it"
+
+That would have been hard to review, hard to rerun, and easy to lose.
+
+So the test setup evolved into something much more explicit inside `spml/tests/test_decomposition.py`.
+
+### 1. The reference cases were embedded directly into the Python tests
+
+Instead of making CI read external R-generated files at runtime, I moved the relevant reference values into the Python test module itself.
+
+That meant the branch carried the evidence directly:
+
+- one fixed-bandwidth reference fixture
+- one adaptive-bandwidth reference fixture
+- each including the local loadings and local variance proportions I actually wanted to compare
+
+This was a much better design for the PR because:
+
+- the tests became self-contained
+- CI no longer depended on local `.json` or `.R` files
+- reviewers could inspect the expected values in the same place as the assertions
+- the comparison stopped being "trust me, I ran R earlier"
+
+### 2. The test data path was made reproducible
+
+I also made the Python side reconstruct the standardized dataset used for comparison in a consistent way, rather than depending on whatever happened to be in memory when I last ran a notebook.
+
+So the setup was roughly:
+
+- load the reference data
+- standardize it in the same way expected by the GWPCA workflow
+- fit the Python estimator under the same fixed or adaptive neighborhood settings
+- compare only the outputs that are genuinely comparable
+
+That sounds obvious, but it mattered a lot. Cross-language comparison becomes noisy very quickly if the data preprocessing is even slightly inconsistent.
+
+### 3. I had to normalize the R fixture format before asserting anything
+
+One small but important practical issue was that the R-side reference values were not in a shape that could just be dropped into NumPy assertions.
+
+In particular:
+
+- some locations were intentionally uninformative and effectively `NaN`
+- the variance-proportion data needed conversion into a consistent numeric array
+- the loading tables had to be interpreted location-by-location and component-by-component
+
+So part of the Week 6 work was not just "write tests," but also:
+
+- write the fixture-conversion helpers
+- make the expected arrays line up with the estimator output layout
+- ensure the comparison logic reflected PCA sign ambiguity instead of misclassifying it as failure
+
+That was a very software-engineering kind of task: not glamorous, but necessary for the numerical story to become reliable.
+
+### 4. The comparisons were intentionally selective
+
+I did **not** try to assert exact equality on every raw intermediate quantity. That would have been misleading.
+
+The tests focused on outputs I could defend:
+
+- absolute local component loadings
+- local explained-variance ratios / local variance proportions
+- both fixed-bandwidth and adaptive-bandwidth cases
+
+And the assertions were chosen for a reason:
+
+- absolute values for loadings, because PCA sign flips are arbitrary
+- local variance proportions, because they are more stable cross-language targets than raw eigenvalue magnitude alone
+- multiple locations, not just one "nice" focal point
+
+That made the tests much stronger than a single golden-value check.
+
+### 5. The R-comparison tests were only one layer
+
+Once those reference tests were in place, I also extended the decomposition coverage around the implementation itself.
+
+This ended up including tests for:
+
+- `fit_transform` returning the same in-sample values exposed by `scores_`
+- `fit_transform(..., cv=True)` correctly forwarding fit-time parameters
+- neighborhoods with zero or degenerate weights
+- mixtures of valid and invalid local fits
+- condition numbers computed from the full local spectrum rather than only the retained components
+- `winning_variable_` being missing for failed fits instead of silently wrong
+- unsupervised bandwidth search working without a target `y`
+- `stationarity_test()` requiring a fitted estimator and preserving model configuration during permutation refits
+
+That part was important to me because I did not want Week 6 to become only about "R parity." If a method agrees with R on one fixture but breaks under realistic package usage, that is not enough.
+
+### 6. CI and review shaped the final setup too
+
+The tests themselves also had to survive the normal project tooling, not just my laptop.
+
+So part of the week was spent making sure the branch held up under:
+
+- `ruff check`
+- `ruff format`
+- type checking
+- the project pytest suite
+- PR review comments about keeping the estimator API and outputs readable
+
+In practice, that meant the numerical tests and the API cleanup were not separate tracks. They kept affecting each other.
+
+For example:
+
+- once `components_` became a pandas-facing object, the tests had to validate the public shape and labeling rather than only raw NumPy contents
+- once decomposition was treated more explicitly as unsupervised, the search and validation tests had to reflect that `y` is intentionally absent
+- once the R fixtures were inlined, the tests became easier to run in CI and easier to reason about in review
+
+So Week 6 was not only "compare with R." It was also:
+
+> take the R comparison, turn it into maintainable tests, and make those tests fit the package instead of living beside it.
+
+That ended up being one of the most valuable parts of the whole PR.
+
 ## Reviewer Feedback Was a Big Part of This Week
 
 This was also the week where the review conversation around the PR mattered a lot.
