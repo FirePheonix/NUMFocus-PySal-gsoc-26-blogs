@@ -4,5 +4,7 @@ url: "https://firepheonix.github.io"
 baseurl: "/NUMFocus-PySal-gsoc-26-blogs"
 theme: minima
 markdown: kramdown
+header_pages:
+  - index.md
 plugins:
   - jekyll-feed
