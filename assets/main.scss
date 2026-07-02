@@ -3,23 +3,24 @@
 
 @import "minima";
 
-.wrapper {
-  max-width: 1480px;
-  padding-right: 20px;
-  padding-left: 20px;
+.site-header .wrapper,
+.page-content .wrapper,
+.site-footer .wrapper {
+  max-width: min(1720px, calc(100vw - 28px));
+  padding-right: 14px;
+  padding-left: 14px;
 }
 
 .site-shell {
   display: grid;
-  grid-template-columns: 260px minmax(0, 1fr);
-  gap: 1.75rem;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 1.1rem;
   align-items: start;
 }
 
 .site-sidebar {
   position: sticky;
   top: 2rem;
-  margin-left: -0.5rem;
 }
 
 .site-sidebar__inner {
@@ -60,6 +61,14 @@
 }
 
 @media screen and (max-width: 900px) {
+  .site-header .wrapper,
+  .page-content .wrapper,
+  .site-footer .wrapper {
+    max-width: calc(100vw - 20px);
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
   .site-shell {
     grid-template-columns: 1fr;
     gap: 1.5rem;
